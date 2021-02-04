@@ -1,0 +1,33 @@
+version: '2.1'
+
+services:
+
+  floor-layout-mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=floor_layout_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
+
+  floor-layout-main:
+    image: floor-layout-app:0.0.1-SNAPSHOT
+    restart: on-failure
+    depends_on:
+      myapp-mysql:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_HOST=floor-layout-mysql
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=floor_layout_db
+      - DATABASE_PORT=3306

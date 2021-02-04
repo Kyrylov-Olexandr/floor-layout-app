@@ -1,4 +1,4 @@
-package com.floorlayoutapp.floorlayoutapp;
+package com.main.floorlayoutapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
